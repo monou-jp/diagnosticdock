@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title>DiagnosticDock – デモ & 使い方（フル機能サンプル）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="DiagnosticDock は、既存サイトに <script> 1行で埋め込める超軽量な診断・分岐ウィジェットです。デモと使い方を掲載。" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- このページ自体の見た目用（DiagnosticDock本体のCSSとは無関係） -->
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            padding-bottom: 3rem;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #111 0%, #333 100%);
+            color: #fff;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            border-radius: 1rem;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #0d6efd;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+        .log {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+        }
+        .kbd {
+            background-color: #eee;
+            border-radius: 3px;
+            border: 1px solid #b4b4b4;
+            box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset;
+            color: #333;
+            display: inline-block;
+            font-size: .85em;
+            font-weight: 700;
+            line-height: 1;
+            padding: 2px 4px;
+            white-space: nowrap;
+       }
+    </style>
+
+    <!-- DiagnosticDock 本体 -->
+    <!-- ここはあなたの公開先に置き換えてください（例: GitHub Pages のURL） -->
+    <script src="../diagnosticdock.js" defer></script>
+</head>
+<body>
+
+<header class="hero-section">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">DiagnosticDock</h1>
+        <p class="lead mb-4">
+            既存サイトに <code>&lt;script&gt;</code> 1行で埋め込める、<br class="d-none d-md-block" />
+            <strong>超軽量な診断・分岐ウィジェット</strong>
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+            <span class="badge rounded-pill bg-light text-dark px-3 py-2">Vanilla JS</span>
+            <span class="badge rounded-pill bg-light text-dark px-3 py-2">1ファイル完結</span>
+            <span class="badge rounded-pill bg-light text-dark px-3 py-2">依存なし</span>
+            <span class="badge rounded-pill bg-light text-dark px-3 py-2">後付けOK</span>
+            <span class="badge rounded-pill bg-light text-dark px-3 py-2">制作現場向け</span>
+        </div>
+    </div>
+</header>
+
+<div class="container mb-5">
+    <h2 class="section-title">利用できる用途</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 p-4">
+                <h3 class="h5 fw-bold mb-3 border-bottom pb-2">Web・マーケティング</h3>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><i class="bi bi-check2-circle text-primary me-2"></i><strong>おすすめプラン診断</strong>：最適なサービスを表示</li>
+                    <li class="mb-2"><i class="bi bi-check2-circle text-primary me-2"></i><strong>概算見積（目安）</strong>：予算帯を提示し誘導</li>
+                    <li class="mb-0"><i class="bi bi-check2-circle text-primary me-2"></i><strong>分岐ナビ</strong>：Yes/No で適切なページへ</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4">
+                <h3 class="h5 fw-bold mb-3 border-bottom pb-2">営業・サポート</h3>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><i class="bi bi-check2-circle text-primary me-2"></i><strong>要件ヒアリング</strong>：事前情報収集で効率化</li>
+                    <li class="mb-2"><i class="bi bi-check2-circle text-primary me-2"></i><strong>トラブル解決</strong>：症状から解決策を提示</li>
+                    <li class="mb-0"><i class="bi bi-check2-circle text-primary me-2"></i><strong>資料選定</strong>：課題に合う資料を提案</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4">
+                <h3 class="h5 fw-bold mb-3 border-bottom pb-2">採用・社内活用</h3>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><i class="bi bi-check2-circle text-primary me-2"></i><strong>面談マッチング</strong>：最適なチームを提案</li>
+                    <li class="mb-2"><i class="bi bi-check2-circle text-primary me-2"></i><strong>申請ルールナビ</strong>：必要な手続きを案内</li>
+                    <li class="mb-0"><i class="bi bi-check2-circle text-primary me-2"></i><strong>福利厚生ガイド</strong>：制度のリマインド</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="container">
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <section class="card p-4 mb-4">
+                <h2 class="h4 fw-bold mb-3">1) まずは触る（デモ）</h2>
+                <p class="text-muted small mb-4">
+                    右下の <span class="kbd">診断</span> ボタン（ランチャー）を押した場合でも、以下のボタンを押した場合でも同じモーダルが開きます。
+                </p>
+
+                <div class="alert alert-primary mb-4">
+                    <strong class="d-block mb-2">このページで試せること</strong>
+                    <ul class="small mb-0 ps-3">
+                        <li>Yes/No 分岐（option.next）</li>
+                        <li>ルール分岐（step.next の条件）</li>
+                        <li>複数選択（multi）＋選択必須チェック</li>
+                        <li>進捗（bar/text）</li>
+                        <li>結果画面（items / payload / CTA）</li>
+                        <li>hooksログ（onStepChange / onResult / onCtaClick）</li>
+                    </ul>
+                </div>
+
+                <div class="d-flex gap-2 mb-4">
+                    <button class="btn btn-primary px-4" id="btnOpenModal">モーダル診断を開く</button>
+                    <button class="btn btn-outline-secondary" id="btnResetLog">ログをクリア</button>
+                </div>
+
+                <h3 class="h6 fw-bold mb-2">イベントログ（hooks）</h3>
+                <div id="eventLog" class="log" aria-live="polite"></div>
+            </section>
+
+            <section class="card p-4 mb-4 text-center">
+                <h2 class="h4 fw-bold mb-3">2) サーバー不要</h2>
+                <p class="text-muted mb-0">
+                    診断の状態管理・結果生成はブラウザ内で完結します。<br />
+                    既存の問い合わせフォーム等に <code>ctaUrl</code> でつなぐだけで運用可能です。
+                </p>
+            </section>
+        </div>
+
+        <div class="col-lg-6">
+            <section class="card p-4 mb-4">
+                <h2 class="h4 fw-bold mb-3">3) 導入手順（初心者向け）</h2>
+                
+                <h3 class="h6 fw-bold mb-2 mt-3">ステップA：ファイルを置く</h3>
+                <p class="text-muted small">
+                    <code>diagnosticdock.js</code> をサイト内に配置します（例：<code>/assets/diagnosticdock.js</code>）。
+                </p>
+
+                <h3 class="h6 fw-bold mb-2">ステップB：script 1行で読み込む</h3>
+                <pre class="mb-4"><code>&lt;script src="/assets/diagnosticdock.js" defer&gt;&lt;/script&gt;</code></pre>
+
+                <div class="alert alert-light border small mb-4">
+                    <strong class="d-block mb-2">導入のメリット</strong>
+                    <ul class="mb-0 ps-3">
+                        <li><strong>工数削減</strong>：スクラッチ開発不要。設定を書くだけで診断が完成します。</li>
+                        <li><strong>既存サイトを壊さない</strong>：既存の HTML/CSS に干渉しにくい独立設計です。</li>
+                        <li><strong>メンテナンス性</strong>：JSON ライクな設定で質問の追加・修正が容易です。</li>
+                    </ul>
+                </div>
+
+                <h3 class="h6 fw-bold mb-2">ステップC：初期化コードを書く</h3>
+                <pre><code>&lt;script&gt;
+diagnosticDock({
+  title: "簡易診断",
+  steps: [
+    { id: "q1", question: "質問ですか？", options: [
+      { label: "はい", value: "はい" },
+      { label: "いいえ", value: "いいえ" }
+    ]}
+  ],
+  result: function (answers) {
+    return { title: "結果", description: "…", ctaLabel: "問い合わせ", ctaUrl: "/contact" };
+  }
+});
+&lt;/script&gt;</code></pre>
+
+                <div class="alert alert-info small mt-3 mb-0">
+                    mount を指定しない場合は「右下起点ボタン → modal」で動くため、既存レイアウトを崩しにくい導入が可能です。
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-2">
+        <div class="col-lg-6">
+            <section class="card p-4 mb-4 h-100">
+                <h2 class="h4 fw-bold mb-3">4) 設定（制作会社・開発者向け）</h2>
+                <p class="text-muted small mb-3">主な設定キー（よく使うもの）：</p>
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-secondary">mode: "modal"</span>
+                    <span class="badge bg-secondary">launcherLabel: "診断"</span>
+                    <span class="badge bg-secondary">showProgress</span>
+                    <span class="badge bg-secondary">progressStyle: "bar|text|both"</span>
+                    <span class="badge bg-secondary">theme: density / radius / fontSize</span>
+                    <span class="badge bg-secondary">hooks: onStepChange / onResult</span>
+                </div>
+
+                <h3 class="h6 fw-bold mb-2">カスタマイズのヒント</h3>
+                <ul class="text-muted small mb-4">
+                    <li><strong>既存フォームへの自動入力</strong>：<code>onResult</code> や <code>onCtaClick</code> フックを使い、回答内容を URL パラメータとして付与したり、hidden フィールドにセットしたりできます。</li>
+                    <li><strong>デザインの微調整</strong>：CSS カスタムプロパティ（--dd-accent-color など）やテーマ設定で、サイトのトーン＆マナーに合わせられます。</li>
+                </ul>
+
+                <h3 class="h6 fw-bold mb-2">グローバル上書き</h3>
+                <pre><code>&lt;script&gt;
+window.DIAGNOSTICDOCK_CONFIG = {
+  ctaTarget: "_blank",
+  showProgress: true,
+  theme: { density: "compact", radius: 14 }
+};
+&lt;/script&gt;</code></pre>
+
+                <div class="alert alert-warning small mt-3 mb-0">
+                    <strong>注意</strong>：このページではデモのため init スクリプトが複数あります。実運用では「1回だけ初期化」してください。
+                </div>
+            </section>
+        </div>
+
+        <div class="col-lg-6">
+            <section class="card p-4 mb-4 h-100">
+                <h2 class="h4 fw-bold mb-3">5) 条件分岐の書き方（重要）</h2>
+
+                <h3 class="h6 fw-bold mb-2">A. 選択肢ごとの分岐（option.next）</h3>
+                <pre class="mb-4"><code>{
+  id: "need_lp",
+  question: "LPは必要ですか？",
+  options: [
+    { label: "はい", value: "はい", next: "lp_detail" },
+    { label: "いいえ", value: "いいえ",  next: "end" }
+  ]
+}</code></pre>
+
+                <h3 class="h6 fw-bold mb-2">B. ルール分岐（step.next）</h3>
+                <p class="text-muted small">回答済みの answers を参照して次のステップを決めます。</p>
+                <pre><code>{
+  id: "budget",
+  question: "ご予算感は？",
+  options: [
+    { label: "〜30万円", value: "〜30万円" },
+    { label: "30〜100万円", value: "30〜100万円" },
+    { label: "100万円〜", value: "100万円〜" }
+  ],
+  next: [
+    { when: { id: "budget", eq: "〜30万円" },  goto: "light_plan" },
+    { when: { id: "budget", eq: "30〜100万円" },  goto: "standard_plan" },
+    { goto: "end" }
+  ]
+}</code></pre>
+
+                <div class="alert alert-light border small mt-3 mb-0">
+                    multi の場合でも option.next を使えます（選択された value のうち最初にマッチした next を採用する設計）。
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-2">
+        <div class="col-lg-6">
+            <section class="card p-4 mb-4 h-100">
+                <h2 class="h4 fw-bold mb-3">6) CSP / セキュリティ制約（重要）</h2>
+
+                <p class="text-muted small mb-3">
+                    DiagnosticDock は <code>eval</code> / <code>new Function</code> を使いません（CSPに配慮）。<br />
+                    ただし <strong>スタイルは &lt;style&gt; を注入</strong>するため、CSP設定によっては見た目が崩れる可能性があります。
+                </p>
+
+                <div class="alert alert-danger small mb-4">
+                    <strong class="d-block mb-1">動かない / 見た目が崩れる主因</strong>
+                    <ul class="mb-0 ps-3">
+                        <li><code>script-src</code> が外部URLを拒否</li>
+                        <li><code>style-src</code> が <code>'unsafe-inline'</code> を拒否</li>
+                        <li>WAF/セキュリティ製品が DOM 注入を強く制限</li>
+                    </ul>
+                </div>
+
+                <h3 class="h6 fw-bold mb-2">推奨（例）</h3>
+                <pre class="mb-0"><code>Content-Security-Policy:
+  script-src 'self' https://YOUR-CDN-OR-PAGES-DOMAIN;
+  style-src 'self' 'unsafe-inline';</code></pre>
+            </section>
+        </div>
+
+        <div class="col-lg-6">
+            <section class="card p-4 mb-4 h-100">
+                <h2 class="h4 fw-bold mb-3">7) 制作・開発の依頼</h2>
+                <p class="text-muted small mb-4">
+                    このスクリプトは <strong>門王</strong>（https://monou.jp）が制作しています。<br />
+                    診断・分岐ウィジェットの開発、既存サイトへの組み込み、要件に合わせたカスタマイズなどのご相談を受け付けています。
+                </p>
+                <div class="d-flex gap-2 mb-4">
+                    <a class="btn btn-primary px-4" href="https://monou.jp" target="_blank" rel="noopener noreferrer">門王（monou.jp）へ</a>
+                    <a class="btn btn-outline-dark" href="https://monou.jp/contact" target="_blank" rel="noopener noreferrer">開発相談はこちら</a>
+                </div>
+                <div class="alert alert-info small mb-0">
+                    例：制作会社向けに「案件種別に応じてヒアリング項目を出し分け」「概算帯と提案文を自動生成」「フォームに自動転記」など。
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<footer class="container text-center mt-5">
+    <hr class="mb-4" />
+    <p class="text-muted small">© DiagnosticDock Contributors / BSD-3-Clause</p>
+</footer>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    /* ---------------------------
+       デモ用：hooksログ
+    ---------------------------- */
+    (function () {
+        var logEl = document.getElementById('eventLog');
+        var btnResetLog = document.getElementById('btnResetLog');
+
+        function now() {
+            var d = new Date();
+            function pad(n){ return (n < 10 ? '0' : '') + n; }
+            return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+        }
+
+        function appendLog(line) {
+            if (!logEl) return;
+            logEl.textContent = logEl.textContent + '[' + now() + '] ' + line + '\n';
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        if (btnResetLog) {
+            btnResetLog.addEventListener('click', function () {
+                logEl.textContent = '';
+            });
+        }
+
+        /* ---------------------------
+           フル機能デモ（modal / launcher）
+           - 条件分岐
+           - multi
+           - progress bar/text
+           - payload
+           - hooks
+           - theme
+        ---------------------------- */
+        function initModalDemo() {
+            if (typeof window.diagnosticDock !== 'function') {
+                appendLog('DiagnosticDock が読み込まれていません（diagnosticdock.js のパスを確認してください）');
+                return;
+            }
+
+            var instance = diagnosticDock({
+                // mount未指定 → 右下 launcher 運用（floatdock思想）
+                mode: 'modal',
+                title: '制作診断（フル機能デモ）',
+                launcherLabel: '診断',
+
+                // 進捗
+                showProgress: true,
+                progressStyle: 'both',
+
+                // テーマ（密度・角丸・サイズ）
+                theme: { density: 'normal', radius: 14, fontSize: 13, maxWidth: 560, offset: 16 },
+
+                // hooks
+                onOpen: function () {
+                    appendLog('onOpen: modal opened');
+                },
+                onClose: function () {
+                    appendLog('onClose: modal closed');
+                },
+                onStepChange: function (p) {
+                    appendLog('onStepChange: reason=' + p.reason + ' to=' + p.to + ' step=' + p.stepNumber + '/' + p.stepCount);
+                },
+                onReset: function () {
+                    appendLog('onReset');
+                },
+                onResult: function (p) {
+                    appendLog('onResult: ' + JSON.stringify(p.result));
+                },
+                onCtaClick: function (p) {
+                    appendLog('onCtaClick: answers=' + JSON.stringify(p.answers));
+                },
+
+                steps: [
+                    {
+                        id: 'goal',
+                        question: '目的に近いものは？',
+                        description: '最も近いものを選んでください（ここは分岐します）',
+                        options: [
+                            { label: 'とりあえず相談したい（ヒアリング導線）', value: '相談', next: 'requirements' },
+                            { label: '概算見積の目安がほしい', value: '見積', next: 'site_type' },
+                            { label: 'おすすめプランを知りたい', value: 'おすすめ', next: 'site_type' }
+                        ]
+                    },
+
+                    /* multi：要件ヒアリング（選択必須） */
+                    {
+                        id: 'requirements',
+                        type: 'multi',
+                        question: '必要そうな要件を選んでください（複数可）',
+                        description: '1つ以上選ぶと次へ進めます（multi + required）',
+                        options: [
+                            { label: 'お問い合わせフォーム', value: 'フォーム' },
+                            { label: '予約/カレンダー', value: '予約' },
+                            { label: '多言語', value: '多言語' },
+                            { label: 'CMS（WordPress等）', value: 'CMS' },
+                            { label: '決済', value: '決済' }
+                        ],
+                        // multiでも option.next が使える（優先で next へ）
+                        // 例：決済を選んだら追加質問へ
+                        next: [
+                            { when: { id: 'requirements', truthy: true }, goto: 'timeline' }
+                        ]
+                    },
+
+                    {
+                        id: 'timeline',
+                        question: '希望納期は？',
+                        options: [
+                            { label: '〜1ヶ月', value: '〜1ヶ月' },
+                            { label: '〜3ヶ月', value: '〜3ヶ月' },
+                            { label: '未定', value: '未定' }
+                        ],
+                        next: 'end'
+                    },
+
+                    /* 見積/おすすめ系：サイト種別 */
+                    {
+                        id: 'site_type',
+                        question: 'どのようなサイトですか？',
+                        options: [
+                            { label: 'コーポレート', value: 'コーポレート' },
+                            { label: 'LP', value: 'LP' },
+                            { label: '採用/メディア', value: '採用/メディア' }
+                        ]
+                    },
+
+                    {
+                        id: 'pages',
+                        question: 'ページ規模は？',
+                        options: [
+                            { label: '〜5P', value: '〜5P' },
+                            { label: '〜15P', value: '〜15P' },
+                            { label: '15P以上', value: '15P以上' }
+                        ]
+                    },
+
+                    {
+                        id: 'budget',
+                        question: 'ご予算感は？',
+                        options: [
+                            { label: '〜30万円', value: '〜30万円' },
+                            { label: '30〜100万円', value: '30〜100万円' },
+                            { label: '100万円〜', value: '100万円〜' }
+                        ],
+                        // ルール分岐例（step.next）
+                        // 低予算なら軽量プラン説明を挟む
+                        next: [
+                            { when: { id: 'budget', eq: '〜30万円' }, goto: 'light_plan' },
+                            { goto: 'end' }
+                        ]
+                    },
+
+                    {
+                        id: 'light_plan',
+                        question: '低予算帯の場合、まずはどちらが近いですか？',
+                        description: 'ここは補足の質問ステップ（分岐で挿入）です',
+                        options: [
+                            { label: 'テンプレート活用で最短', value: 'テンプレート' },
+                            { label: '最低限をオリジナルで', value: 'オリジナル' }
+                        ],
+                        next: 'end'
+                    }
+                ],
+
+                result: function (a) {
+                    // 結果生成（items / payload / CTA）
+                    // 目的によって出し分け
+                    var items = [];
+                    var payloadLines = [];
+
+                    function pushKV(k, v) { items.push({ label: k, value: v }); }
+                    function addLine(s) { payloadLines.push(s); }
+
+                    pushKV('目的', a.goal || '-');
+                    if (a.goal === '相談') {
+                        var req = a.requirements || [];
+                        pushKV('要件', req.join(', ') || '-');
+                        pushKV('希望納期', a.timeline || '-');
+
+                        addLine('【診断結果（ヒアリング）】');
+                        addLine('- 目的: ヒアリング導線');
+                        addLine('- 要件: ' + (req.join(', ') || 'なし'));
+                        addLine('- 希望納期: ' + (a.timeline || '未定'));
+                        addLine('');
+                        addLine('【相談したい内容】');
+                        addLine('目的：');
+                        addLine('希望納期：');
+                        addLine('参考URL：');
+
+                        return {
+                            title: '相談の下準備ができました',
+                            description: 'このまま問い合わせに進むと、必要情報がスムーズに伝わります。',
+                            items: items,
+                            payload: payloadLines.join('\n'),
+                            ctaLabel: 'この内容で問い合わせ',
+                            ctaUrl: 'https://monou.jp/contact'
+                        };
+                    }
+
+                    // 概算/おすすめ（簡易モデル）
+                    var base = (a.site_type === 'LP') ? 30 : (a.site_type === '採用/メディア') ? 70 : 50;
+                    var size = (a.pages === '〜5P') ? 0.9 : (a.pages === '〜15P') ? 1.2 : 1.7;
+                    var mult = (a.budget === '〜30万円') ? 0.9 : (a.budget === '30〜100万円') ? 1.2 : 1.8;
+                    var estMin = Math.round(base * size * mult);
+                    var estMax = Math.round(base * size * mult * 1.6);
+
+                    pushKV('サイト種別', a.site_type || '-');
+                    pushKV('規模', a.pages || '-');
+                    pushKV('予算感', a.budget || '-');
+                    pushKV('概算目安', estMin + '〜' + estMax + '万円');
+
+                    addLine('【診断結果】');
+                    addLine('- 目的: ' + (a.goal || ''));
+                    addLine('- サイト種別: ' + (a.site_type || ''));
+                    addLine('- 規模: ' + (a.pages || ''));
+                    addLine('- 予算感: ' + (a.budget || ''));
+                    if (a.light_plan) addLine('- 低予算補足: ' + a.light_plan);
+                    addLine('- 概算目安: ' + estMin + '〜' + estMax + '万円');
+                    addLine('');
+                    addLine('※正式見積ではありません（要件ヒアリング前の目安です）');
+                    addLine('');
+                    addLine('【相談したい内容】');
+                    addLine('目的：');
+                    addLine('希望納期：');
+                    addLine('参考URL：');
+
+                    var plan = (a.site_type === 'LP') ? 'LP制作プラン' : (a.site_type === '採用/メディア') ? 'メディア/採用サイトプラン' : 'コーポレート制作プラン';
+                    var desc = (a.goal === '見積')
+                        ? '正式見積ではなく、要件ヒアリング前の目安です。'
+                        : '回答内容から、近いプランの方向性を提示します。';
+
+                    return {
+                        title: (a.goal === '見積') ? '概算目安' : 'おすすめプラン',
+                        description: desc,
+                        items: items.concat([{ label: '推奨', value: plan }]),
+                        payload: payloadLines.join('\n'),
+                        ctaLabel: 'この内容で問い合わせ',
+                        ctaUrl: 'https://monou.jp/contact'
+                    };
+                }
+            });
+
+            // デモページ上のボタンで open
+            var btnOpen = document.getElementById('btnOpenModal');
+            if (btnOpen) {
+                btnOpen.addEventListener('click', function () {
+                    if (instance && instance.open) instance.open();
+                });
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            appendLog('Demo page loaded');
+            initModalDemo();
+        });
+    })();
+</script>
+
+</body>
+</html>
